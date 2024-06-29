@@ -1,10 +1,14 @@
 import MaxWidthWrapper from "../components/MaxWidthWrapper";
 import { Check, Star } from "lucide-react";
 import Phone from "../components/Phone";
+import Navbar from "../components/Navbar";
 
 export default function Home() {
   return (
     <div className="bg-slate-50">
+    
+    {/* Navbar */}
+    <Navbar/>
 
     {/* HERO SECTION */}
       <section>
