@@ -19,7 +19,7 @@ const Navbar = () => {
             {user ? (
               <>
                 <NavLink
-                  to='/api/auth/logout'
+                  to='/logout'
                   className={buttonVariants({
                     size: 'sm',
                     variant: 'ghost',
@@ -37,7 +37,7 @@ const Navbar = () => {
                   </NavLink>
                 ) : null}
                 <NavLink
-                  to='/configure/upload'
+                  to='/upload'
                   className={buttonVariants({
                     size: 'sm',
                     className: 'hidden sm:flex items-center gap-1',
@@ -49,7 +49,7 @@ const Navbar = () => {
             ) : (
               <>
                 <NavLink
-                  to='/api/auth/register'
+                  to='/register'
                   className={buttonVariants({
                     size: 'sm',
                     variant: 'ghost',
@@ -58,7 +58,7 @@ const Navbar = () => {
                 </NavLink>
 
                 <NavLink
-                  to='/api/auth/login'
+                  to='/login'
                   className={buttonVariants({
                     size: 'sm',
                     variant: 'ghost',
@@ -69,7 +69,7 @@ const Navbar = () => {
                 <div className='h-8 w-px bg-zinc-200 hidden sm:block' />
 
                 <NavLink
-                  to='/configure/upload'
+                  to='/upload'
                   className={buttonVariants({
                     size: 'sm',
                     className: 'hidden sm:flex items-center gap-1',
