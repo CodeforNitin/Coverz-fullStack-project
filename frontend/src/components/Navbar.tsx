@@ -53,7 +53,8 @@ const Navbar = () => {
                   className={buttonVariants({
                     size: 'sm',
                     variant: 'ghost',
-                  })}>
+                  })}
+                  >
                   Sign up
                 </NavLink>
 
