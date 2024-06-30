@@ -25,6 +25,13 @@ userSchema.statics.signup = async function (email, password) {
     if (exists){
       throw Error ('Email already exists')
     }
+
+    // Even an input of one character long into a hash will produce a character sequence that 
+    // will pass your minlength validation.
+    
+    if (password.length<6){
+      throw Error ('Minimum password length is 6 characters')
+    }
     else{
       const salt = await bcrypt.genSalt();
       const hash = await bcrypt.hash(password, salt);
