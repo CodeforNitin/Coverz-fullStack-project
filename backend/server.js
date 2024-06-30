@@ -5,6 +5,8 @@ const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 const cors = require('cors')
 
+//accessing routes
+const authRoutes = require("./routes/authRoutes");
 
 //express app
 const app = express();
