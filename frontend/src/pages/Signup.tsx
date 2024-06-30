@@ -40,7 +40,7 @@ export function SignupForm() {
               <Input id="password" type="password" required />
             </div>
             <Button type="submit" className="w-full">
-              Login
+              Register
             </Button>
             {/* <Button variant="outline" className="w-full">
             Login with Google
