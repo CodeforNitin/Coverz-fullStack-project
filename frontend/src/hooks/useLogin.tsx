@@ -3,6 +3,7 @@ import { useAuthContext } from './useAuthContext'
 
 export const useLogin = () => {
   const [error, setError] = useState<string>('')
+  const [isLoggedin, setIsLoggedin] = useState<string>('')
   const [isLoading, setIsLoading]= useState<boolean>(false)
   const { dispatch } = useAuthContext()
 
@@ -29,6 +30,9 @@ export const useLogin = () => {
       
             // update the auth context
             dispatch({type: 'LOGIN', payload: json})
+
+            //
+            setIsLoggedin('Logged In Successfully ✅')
       
             // update loading state
             setIsLoading(false)
@@ -40,5 +44,5 @@ export const useLogin = () => {
 
   }
 
-  return { login, isLoading, error }
+  return { login, isLoading, error ,isLoggedin}
 }

@@ -19,21 +19,24 @@ export function LoginForm() {
   type LoginFunction = (email: string, password: string) => void;
   type ErrorType = string | null;
   type IsLoadingType = boolean;
-  let passwordRef = useRef<HTMLInputElement>(null);
+  type Isloggedin = string;
+
+
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const {
     login,
     error,
     isLoading,
-  }: { login: LoginFunction; error: ErrorType; isLoading: IsLoadingType } =
+    isLoggedin
+  }: { login: LoginFunction; error: ErrorType; isLoading: IsLoadingType;isLoggedin:Isloggedin} =
     useLogin();
 
   const handleSubmit = async (e: React.MouseEvent<HTMLFormElement>) => {
 
       e.preventDefault();
       await login(email, password);
-      
+
     //need to work on this
     // if (error) {
     //   console.log('ia ma in frontend', error)
@@ -91,6 +94,8 @@ export function LoginForm() {
                 Login
               </Button>
               {error && <div className="text-red-500">{`* ${error}`}</div>}
+              {isLoggedin && <div>{`${isLoggedin}`}</div>}
+
               {/* <Button variant="outline" className="w-full">
             Login with Google
           </Button> */}
