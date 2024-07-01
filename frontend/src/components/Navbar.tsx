@@ -2,10 +2,13 @@ import { NavLink } from 'react-router-dom'
 import MaxWidthWrapper from './MaxWidthWrapper'
 import { buttonVariants } from './ui/button'
 import { ArrowRight } from 'lucide-react'
+import { useAuthContext } from '../hooks/useAuthContext'
+import { useLogout } from '../hooks/useLogout'
 
 const Navbar = () => {
 
-    const user = undefined;
+  const {user} = useAuthContext();
+  const { logout } = useLogout();
     const isAdmin:Boolean = false;
 
   return (
@@ -18,14 +21,20 @@ const Navbar = () => {
           <div className='h-full flex items-center space-x-4'>
             {user ? (
               <>
-                <NavLink
-                  to='/logout'
+                <div>
+                <span>
+                <span>{user.email}</span>
+                </span>
+                <button
                   className={buttonVariants({
                     size: 'sm',
                     variant: 'ghost',
-                  })}>
-                  Sign out
-                </NavLink>
+                  })}
+                  onClick={logout}>
+                  Log out
+                </button>
+                </div>
+                
                 {isAdmin ? (
                   <NavLink
                     to='/dashboard'
@@ -64,7 +73,7 @@ const Navbar = () => {
                     size: 'sm',
                     variant: 'ghost',
                   })}>
-                  Login
+                  Log in
                 </NavLink>
 
                 <div className='h-8 w-px bg-zinc-200 hidden sm:block' />
