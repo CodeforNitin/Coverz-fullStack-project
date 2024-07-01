@@ -16,11 +16,11 @@ function App() {
     },
     {
       path: "/signup",
-      element: <SignupForm />
+      element: !user ? <SignupForm/> : <Navigate to='/' />
     },
     {
       path: "/login",
-      element: <LoginForm />
+      element: !user ? <LoginForm/> : <Navigate to='/' />
     },
     {
       path: "*",
