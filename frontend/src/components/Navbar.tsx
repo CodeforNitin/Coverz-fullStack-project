@@ -49,7 +49,7 @@ const Navbar = () => {
             ) : (
               <>
                 <NavLink
-                  to='/register'
+                  to='/signup'
                   className={buttonVariants({
                     size: 'sm',
                     variant: 'ghost',
