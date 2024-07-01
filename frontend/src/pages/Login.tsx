@@ -10,15 +10,16 @@ import {
 import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
 import MaxWidthWrapper from "../components/MaxWidthWrapper";
-import { useState } from "react";
+import { useState,useRef } from "react";
 import { useLogin } from "../hooks/useLogin";
+
 
 export function LoginForm() {
   // Assuming these are the types you expect for each value
   type LoginFunction = (email: string, password: string) => void;
   type ErrorType = string | null;
   type IsLoadingType = boolean;
-
+  let passwordRef = useRef<HTMLInputElement>(null);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const {
@@ -29,8 +30,23 @@ export function LoginForm() {
     useLogin();
 
   const handleSubmit = async (e: React.MouseEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    await login(email, password);
+
+      e.preventDefault();
+      await login(email, password);
+      
+    //need to work on this
+    // if (error) {
+    //   console.log('ia ma in frontend', error)
+    //   console.log(passwordRef.current)
+    // }
+
+    // if (error && error.includes('password')) {
+    //   // Clear password field and add red border class
+    //   setPassword('');
+    //   if (passwordRef.current) {
+    //     passwordRef.current.focus();
+    //   }
+    // }
   };
 
   return (
@@ -63,7 +79,7 @@ export function LoginForm() {
                 Forgot your password?
               </NavLink> */}
                 </div>
-                <Input
+                <input
                   id="password"
                   type="password"
                   onChange={(e) => setPassword(e.target.value)}
