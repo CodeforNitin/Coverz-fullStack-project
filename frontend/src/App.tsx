@@ -4,6 +4,7 @@ import Error from "./pages/Error";
 import { SignupForm } from "./pages/Signup";
 import { LoginForm } from './pages/Login';
 import { useAuthContext } from "./hooks/useAuthContext";
+import Page from "./pages/configure/upload/Page";
 
 
 function App() {
@@ -21,6 +22,10 @@ function App() {
     {
       path: "/login",
       element: !user ? <LoginForm/> : <Navigate to='/' />
+    },
+    {
+      path: "/configure/upload",
+      element: <Page/>
     },
     {
       path: "*",
