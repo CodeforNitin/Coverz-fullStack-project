@@ -7,6 +7,7 @@ import { NavLink } from "react-router-dom";
 import { buttonVariants } from "../components/ui/button";
 import Footer from "../components/Footer";
 
+
 export default function Home() {
   return (
     <div className="bg-slate-50">
@@ -267,6 +268,7 @@ export default function Home() {
       </section>
 
       <Footer/>
+
     </div>
   );
 }

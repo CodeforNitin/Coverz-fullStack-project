@@ -1,8 +1,10 @@
 import React, { useState, DragEvent } from 'react';
+import { useToast } from '../../../components/ui/use-toast';
 
 const FileUpload: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [message, setMessage] = useState<string>('');
+  const { toast } = useToast();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -37,12 +39,23 @@ const FileUpload: React.FC = () => {
       });
 
       if (response.ok) {
-        setMessage('File uploaded successfully');
-      } else {
-        setMessage('File upload failed');
-      }
+
+        // setMessage('File uploaded successfully');
+        toast({
+            title: 'Image uploaded successfully!',
+            variant: 'success',
+            className: `bg-green-500`
+          });
+        } 
+        else {
+            throw new Error('Failed to upload image');}
     } catch (error) {
       setMessage('File upload failed');
+      toast({
+        title: 'Failed to upload image',
+        description: 'Please try again later.',
+        variant: 'destructive',
+      });
     }
   };
 
