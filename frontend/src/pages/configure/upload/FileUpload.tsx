@@ -1,19 +1,27 @@
 import React, { useState, DragEvent } from 'react';
 import { useToast } from '../../../components/ui/use-toast';
+import { Progress } from '../../../components/ui/progress';
+import axios from 'axios';
 
 const FileUpload: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [isDragOver, setIsDragOver] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
   const [message, setMessage] = useState<string>('');
   const { toast } = useToast();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       setSelectedFile(e.target.files[0]);
+    //   setIsDragOver(false);
+    //   setIsUploading(true);
     }
   };
 
   const handleDragOver = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
+    setIsUploading(false);
   };
 
   const handleDrop = (e: DragEvent<HTMLDivElement>) => {
@@ -22,6 +30,7 @@ const FileUpload: React.FC = () => {
       setSelectedFile(e.dataTransfer.files[0]);
     }
   };
+
 
   const handleUpload = async () => {
     if (!selectedFile) {
@@ -32,13 +41,21 @@ const FileUpload: React.FC = () => {
     const formData = new FormData();
     formData.append('image', selectedFile);
 
+    setIsUploading(true);
+    setUploadProgress(0);
+    
     try {
-      const response = await fetch('http://localhost:4000/api/images/upload', {
-        method: 'POST',
-        body: formData,
-      });
+        const response = await axios.post('http://localhost:4000/api/images/upload', formData, {
+          onUploadProgress: (progressEvent) => {
+            if (progressEvent.total) {
+              const percentComplete = (progressEvent.loaded / progressEvent.total) * 100;
+              setUploadProgress(percentComplete);
+            }
+          },
+        });
 
-      if (response.ok) {
+
+        if (response.status === 201) {
 
         // setMessage('File uploaded successfully');
         toast({
@@ -46,6 +63,9 @@ const FileUpload: React.FC = () => {
             variant: 'success',
             className: `bg-green-500`
           });
+
+        setIsUploading(false);
+        setUploadProgress(0);
         } 
         else {
             throw new Error('Failed to upload image');}
@@ -56,15 +76,23 @@ const FileUpload: React.FC = () => {
         description: 'Please try again later.',
         variant: 'destructive',
       });
+
+      setIsUploading(false);
+      setUploadProgress(0);
     }
   };
 
   return (
+
+    
     <div className="p-6 max-w-md mx-auto bg-white rounded-xl shadow-md flex flex-col items-center space-y-4">
+        
       <div
         className="w-full h-32 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center cursor-pointer"
         onDragOver={handleDragOver}
         onDrop={handleDrop}
+        onDragEnter={() => setIsDragOver(true)}
+        onDragLeave={() => setIsDragOver(false)}
       >
         {selectedFile ? (
           <p>{selectedFile.name}</p>
@@ -90,6 +118,23 @@ const FileUpload: React.FC = () => {
       >
         Upload
       </button>
+
+      <div className='flex flex-col justify-center mb-2 text-sm text-zinc-700'>
+                {isUploading ? (
+                  <div className='flex flex-col items-center'>
+                    <p>Uploading...</p>
+                    <Progress value={uploadProgress} className='mt-2 w-40 h-2 bg-gray-300' />
+                  </div>
+                ) : isDragOver ? (
+                  <p>
+                    <span className='font-semibold'>Drop file</span> to upload
+                  </p>
+                ) : (
+                  <p>
+                    <span className='font-semibold'>Click to upload</span> or drag and drop
+                  </p>
+                )}
+              </div>
       {message && <p className="text-red-500">{message}</p>}
     </div>
   );
