@@ -1,12 +1,9 @@
 import MaxWidthWrapper from "../components/MaxWidthWrapper";
 import { ArrowRight, Check, Star } from "lucide-react";
 import Phone from "../components/Phone";
-import Navbar from "../components/Navbar";
 import { Reviews } from "../components/Reviews";
 import { NavLink } from "react-router-dom";
 import { buttonVariants } from "../components/ui/button";
-import Footer from "../components/Footer";
-
 
 export default function Home() {
   return (
