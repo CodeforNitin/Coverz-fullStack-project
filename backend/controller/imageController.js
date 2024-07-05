@@ -44,18 +44,35 @@ const saveImage = async (req, res) => {
       height,
     });
 
-    await image.save();
+    const savedImage = await image.save();
     
     console.log('File received 2ND POSTION:', req.file);
 
-    res.status(201).send('File uploaded successfully');
+    res.status(201).send({id : savedImage._id});
   } catch (error) {
     console.error('Error uploading file:', error);
     res.status(500).send('Server error');
   }
 };
 
+const getImage = async (req, res) => {
+  try {
+    const image = await Image.findById(req.params.id);
+
+    if (!image) {
+      return res.status(404).json({ message: 'Image not found' });
+    }
+
+    // Respond with the imageUrl
+    res.json({ imageUrl: image.imageUrl });
+  } catch (error) {
+    console.error('Error fetching image:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+}
+
 module.exports = {
   uploadImage,
   saveImage,
+  getImage
 };
