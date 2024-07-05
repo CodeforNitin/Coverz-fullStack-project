@@ -6,6 +6,9 @@ import { LoginForm } from './pages/Login';
 import { useAuthContext } from "./hooks/useAuthContext";
 import FileUpload from "./pages/configure/upload/FileUpload";
 import Layout from "./components/Layout";
+import FileDesign from "./pages/configure/design/FileDesign";
+
+
 
 function App() {
   const { user } = useAuthContext();
@@ -26,7 +29,11 @@ function App() {
         },
         {
           path: "configure/upload",
-          element: <FileUpload />
+          element: <FileUpload/>
+        },
+        {
+          path: "configure/upload/design",
+          element: <FileDesign/>
         },
         { path: "*", element: <Error /> },
       ]
@@ -36,7 +43,7 @@ function App() {
   const router = createBrowserRouter(routes);
 
   return (
-    <RouterProvider router={router} />
+      <RouterProvider router={router} />
   );
 }
 

@@ -17,7 +17,9 @@ app.use(express.json());
 app.use(cookieParser());
 
 // Middleware for serving static files
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+// app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+// Serve static files from the 'uploads' directory
+app.use('/uploads', express.static('uploads'));
 
 app.use(cors(
   {

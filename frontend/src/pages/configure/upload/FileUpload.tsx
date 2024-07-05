@@ -1,16 +1,21 @@
 import React, { useState, DragEvent, useRef } from "react";
+import { useNavigate } from 'react-router-dom';
 import { useToast } from "../../../components/ui/use-toast";
 import { Progress } from "../../../components/ui/progress";
 import axios from "axios";
 import Steps from "../../../components/Steps";
+import { useImageContext } from '../../../contexts/ImageContext'; // Adjust the path based on your actual file structure
 
-const FileUpload: React.FC = () => {
+
+  const FileUpload = () => {
+  const { imageId,setImageId } = useImageContext();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isDragOver, setIsDragOver] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [message, setMessage] = useState<string>("");
   const { toast } = useToast();
+  const history = useNavigate ();
 
   // useRef to reference the file input element
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -72,6 +77,13 @@ const FileUpload: React.FC = () => {
 
         setIsUploading(false);
         setUploadProgress(0);
+        
+        console.log('raw data id', response.data.id)
+        setImageId(response.data.id); // Update imageId in 
+        console.log('iam in upload' , imageId)
+      // Redirect to the next page or route with imageId
+      history(`/configure/upload/design/`);
+
       } else {
         throw new Error("Failed to upload image");
       }
@@ -169,5 +181,6 @@ const FileUpload: React.FC = () => {
     </>
   );
 };
+
 
 export default FileUpload;
