@@ -2,6 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const multer = require('multer');
 const Image = require('../models/ImageModel');
+const sharp = require('sharp');
 
 // Construct the path to the uploads directory
 const uploadsDir = path.join(__dirname, '..', 'uploads');
@@ -28,19 +29,24 @@ const saveImage = async (req, res) => {
       return res.status(400).send('Please upload a file');
     }
 
-    console.log('File received:', req.file);
+    const targetPath = path.join(uploadsDir, req.file.filename);
+    const imageUrl = `/uploads/${req.file.filename}`;
+    
+    // Get image dimensions using sharp
+    const { width, height } = await sharp(targetPath).metadata();
 
     const image = new Image({
       name: req.file.originalname,
       contentType: req.file.mimetype,
       size: req.file.size,
-      data: fs.readFileSync(req.file.path),
+      imageUrl,
+      width,
+      height,
     });
 
     await image.save();
-
-    // Delete the temporary -- dangerous since it would not save your file to respective path
-    // fs.unlinkSync(req.file.path);
+    
+    console.log('File received 2ND POSTION:', req.file);
 
     res.status(201).send('File uploaded successfully');
   } catch (error) {
