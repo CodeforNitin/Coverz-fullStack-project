@@ -6,6 +6,7 @@ import 'react-image-crop/dist/ReactCrop.css';
 import { useImageContext } from '../../../contexts/ImageContext';
 import Steps from '../../../components/Steps';
 import iphoneImage from '/phone-template.png'; // Adjust the path as per your project structure
+import { Button } from '../../../components/ui/button';
 
 const FileDesign = () => {
   const [crop, setCrop] = useState<Crop>({ aspect: 1024 / 1024 }); // Maintain aspect ratio
@@ -108,25 +109,26 @@ const FileDesign = () => {
     <div>
       <Steps />
       {imageUrl && (
-        <div>
-          <div style={{ position: 'relative', width: '375px', height: '812px' }}> {/* iPhone dimensions */}
+        <div className='ml-10'>
+          <div className='relative w-[300px] mb-5' > {/* iPhone dimensions */}
             <ReactCrop
               src={imageUrl}
               crop={crop}
               onChange={(newCrop) => setCrop(newCrop)}
               onComplete={onCropComplete}
-              style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+              className='absolute mt-20 w-[220px]'
             />
             <img
+            className='w-[220px] h-[400px] mt-5' 
               src={iphoneImage}
               alt='iPhone'
-              style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none' }}
             />
           </div>
-          <button onClick={handleSave}>Save Cropped Image</button>
+          <Button className='ml-[25px] mb-5'>Save Cropped Image</Button>
         </div>
+
       )}
-    </div>
+      </div>
   );
 };
 

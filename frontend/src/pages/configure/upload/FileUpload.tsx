@@ -82,7 +82,7 @@ import { useImageContext } from '../../../contexts/ImageContext'; // Adjust the 
         setImageId(response.data.id); // Update imageId in 
         console.log('iam in upload' , imageId)
       // Redirect to the next page or route with imageId
-      history(`/configure/upload/design/`);
+      history(`/configure/upload/design`);
 
       } else {
         throw new Error("Failed to upload image");
